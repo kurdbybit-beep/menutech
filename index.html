@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Rest | Mobile Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700;900&display=swap');
+
+        :root {
+            --primary: #38bdf8;
+            --accent: #fbbf24;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            margin: 0;
+            padding-bottom: 50px;
+            min-height: 100vh;
+            color: #fff;
+            background: linear-gradient(rgba(2, 6, 23, 0.7), rgba(2, 6, 23, 0.7)), 
+                        url('https://i.postimg.cc/qRzMnWFV/photo-2026-05-09-18-07-24.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-btn {
+            padding: 8px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 0.9rem;
+            border: 1px solid var(--glass-border);
+            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+        }
+
+        .nav-btn.active {
+            background: var(--primary);
+            color: #020617;
+            border-color: var(--primary);
+        }
+
+        header {
+            padding: 30px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(2,6,23,0.8), transparent);
+        }
+
+        header h1 { 
+            font-size: 2.2rem; 
+            margin: 0; 
+            color: var(--primary); 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        header p { color: #cbd5e1; margin-top: 5px; font-size: 1rem; }
+
+        /* --- Back Arrow Style --- */
+        .back-container {
+            display: none; /* Hidden by default */
+            justify-content: center;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: var(--primary);
+            color: #020617;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+            transition: 0.3s;
+        }
+
+        .categories-container {
+            position: sticky;
+            top: 60px;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 12px 0;
+            overflow-x: auto;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .cat-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0 5px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .cat-btn.active {
+            background: var(--primary);
+            color: #020617;
+        }
+
+        .menu-section { padding: 15px; display: none; }
+        .menu-section.active { display: block; animation: fadeIn 0.5s ease; }
+
+        #media-frame-container {
+            display: none; /* Hidden by default */
+            width: 100%;
+            height: calc(100vh - 150px);
+            border: none;
+        }
+
+        iframe { width: 100%; height: 100%; border: none; border-radius: 20px 20px 0 0; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .food-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .food-card { background: var(--card-bg); border-radius: 20px; overflow: hidden; border: 1px solid var(--glass-border); display: flex; flex-direction: column; }
+        .food-img { width: 100%; height: 140px; background-size: cover; background-position: center; }
+        .food-info { padding: 12px; text-align: center; flex-grow: 1; }
+        .food-info h3 { margin: 0 0 8px 0; font-size: 0.95rem; min-height: 2.4em; }
+        .price-tag { background: var(--accent); color: #000; padding: 4px 10px; border-radius: 12px; font-weight: 900; font-size: 0.85rem; }
+
+        .location-tag { text-align: center; margin-top: 20px; padding: 15px; color: var(--primary); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <div id="btn-menu" class="nav-btn active" onclick="showSection('menu')">Menu</div>
+    <div id="btn-media" class="nav-btn" onclick="showSection('media')">Media</div>
+</nav>
+
+<header>
+    <h1>TECH REST</h1>
+    <p id="header-subtitle">تامی تایبەت ل زاخۆ</p>
+</header>
+
+<!-- Back Arrow Icon (Visible only in Media) -->
+<div class="back-container" id="backContainer">
+    <div class="back-btn" onclick="showSection('menu')">
+        <i class="fas fa-arrow-right"></i>
+    </div>
+</div>
+
+<div class="categories-container" id="catBar"></div>
+
+<div id="menuContent"></div>
+
+<!-- Media Container -->
+<div id="media-frame-container">
+    <iframe src="https://falahzakho.github.io/Tech_Ai-/"></iframe>
+</div>
+
+<div class="location-tag" id="footer-location">
+    <i class="fas fa-map-marker-alt"></i> زاخۆ - دەستپێکا رێکا پیشەسازی
+</div>
+
+<script>
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTSRjwZs-DPmh8Cg7LwOa1HTa8m58e4LriIPHbkoxdNp-vcgkNHHsVnp89Dj_TE7xiDLMugKBJRtsBr/pub?output=csv';
+    let dataList = [];
+
+    function showSection(type) {
+        const menuBtn = document.getElementById('btn-menu');
+        const mediaBtn = document.getElementById('btn-media');
+        const catBar = document.getElementById('catBar');
+        const menuContent = document.getElementById('menuContent');
+        const mediaContainer = document.getElementById('media-frame-container');
+        const backBtn = document.getElementById('backContainer');
+        const subtitle = document.getElementById('header-subtitle');
+        const footer = document.getElementById('footer-location');
+
+        if (type === 'media') {
+            menuBtn.classList.remove('active');
+            mediaBtn.classList.add('active');
+            catBar.style.display = 'none';
+            menuContent.style.display = 'none';
+            mediaContainer.style.display = 'block';
+            backBtn.style.display = 'flex';
+            subtitle.innerText = 'Tech Media';
+            footer.style.display = 'none';
+        } else {
+            mediaBtn.classList.remove('active');
+            menuBtn.classList.add('active');
+            catBar.style.display = 'block';
+            menuContent.style.display = 'block';
+            mediaContainer.style.display = 'none';
+            backBtn.style.display = 'none';
+            subtitle.innerText = 'تامی تایبەت ل زاخۆ';
+            footer.style.display = 'block';
+        }
+    }
+
+    async function loadData() {
+        try {
+            const res = await fetch(csvUrl);
+            const txt = await res.text();
+            const rows = txt.split('\n').slice(1);
+            dataList = rows.map(r => {
+                const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.replace(/"/g, '').trim());
+                return { name: c[0], price: c[1], img: c[2], cat: c[3] };
+            }).filter(i => i.cat);
+            renderMenu();
+        } catch (e) { console.error(e); }
+    }
+
+    function renderMenu() {
+        const catBar = document.getElementById('catBar');
+        const menuContent = document.getElementById('menuContent');
+        const cats = [...new Set(dataList.map(i => i.cat))];
+        catBar.innerHTML = '';
+        menuContent.innerHTML = '';
+
+        cats.forEach((cat, index) => {
+            const btn = document.createElement('div');
+            btn.className = `cat-btn ${index === 0 ? 'active' : ''}`;
+            btn.innerText = cat;
+            btn.onclick = () => switchCat(cat, btn);
+            catBar.appendChild(btn);
+
+            const section = document.createElement('div');
+            section.id = `section-${cat}`;
+            section.className = `menu-section ${index === 0 ? 'active' : ''}`;
+            const gridDiv = document.createElement('div');
+            gridDiv.className = 'food-grid';
+            dataList.filter(f => f.cat === cat).forEach(food => {
+                gridDiv.innerHTML += `<div class="food-card"><div class="food-img" style="background-image: url('${food.img}')"></div><div class="food-info"><h3>${food.name}</h3><div><span class="price-tag">${food.price}</span></div></div></div>`;
+            });
+            section.appendChild(gridDiv);
+            menuContent.appendChild(section);
+        });
+    }
+
+    function switchCat(catName, btn) {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(`section-${catName}`).classList.add('active');
+    }
+
+    loadData();
+</script>
+</body>
+</html>
