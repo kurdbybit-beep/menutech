@@ -54,7 +54,6 @@
             border: 1px solid var(--glass-border);
             transition: 0.3s;
             background: rgba(255, 255, 255, 0.05);
-            cursor: pointer;
         }
 
         .nav-btn.active {
@@ -77,29 +76,16 @@
             letter-spacing: 2px;
             text-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
-        header p { color: #cbd5e1; margin-top: 5px; font-size: 1rem; }
-
-        /* --- Back Arrow Style --- */
-        .back-container {
-            display: none; /* Hidden by default */
-            justify-content: center;
-            margin-top: -10px;
-            margin-bottom: 20px;
-        }
-
-        .back-btn {
-            background: var(--primary);
-            color: #020617;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
-            transition: 0.3s;
+        
+        /* شێوازی نوێ بۆ ژمارە مۆبایل */
+        .phone-link { 
+            color: #fbbf24; 
+            margin-top: 8px; 
+            font-size: 1.2rem; 
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            direction: ltr; /* بۆ ئەوەی ژمارەکان ڕێک بن */
         }
 
         .categories-container {
@@ -113,6 +99,8 @@
             white-space: nowrap;
             border-bottom: 1px solid var(--glass-border);
         }
+
+        .categories-container::-webkit-scrollbar { display: none; }
 
         .cat-btn {
             display: inline-block;
@@ -130,98 +118,104 @@
         .cat-btn.active {
             background: var(--primary);
             color: #020617;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
         }
 
-        .menu-section { padding: 15px; display: none; }
+        .menu-section {
+            padding: 15px;
+            display: none;
+        }
+
         .menu-section.active { display: block; animation: fadeIn 0.5s ease; }
-
-        #media-frame-container {
-            display: none; /* Hidden by default */
-            width: 100%;
-            height: calc(100vh - 150px);
-            border: none;
-        }
-
-        iframe { width: 100%; height: 100%; border: none; border-radius: 20px 20px 0 0; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .food-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .food-card { background: var(--card-bg); border-radius: 20px; overflow: hidden; border: 1px solid var(--glass-border); display: flex; flex-direction: column; }
-        .food-img { width: 100%; height: 140px; background-size: cover; background-position: center; }
-        .food-info { padding: 12px; text-align: center; flex-grow: 1; }
-        .food-info h3 { margin: 0 0 8px 0; font-size: 0.95rem; min-height: 2.4em; }
-        .price-tag { background: var(--accent); color: #000; padding: 4px 10px; border-radius: 12px; font-weight: 900; font-size: 0.85rem; }
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
 
-        .location-tag { text-align: center; margin-top: 20px; padding: 15px; color: var(--primary); font-weight: bold; }
+        .food-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .food-img {
+            width: 100%;
+            height: 140px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .food-info { 
+            padding: 12px; 
+            text-align: center; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .food-info h3 { 
+            margin: 0 0 8px 0; 
+            font-size: 0.95rem; 
+            line-height: 1.2;
+            min-height: 2.4em;
+        }
+        
+        .price-tag {
+            background: var(--accent);
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .location-tag {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
     </style>
 </head>
 <body>
 
 <nav class="top-nav">
-    <div id="btn-menu" class="nav-btn active" onclick="showSection('menu')">Menu</div>
-    <div id="btn-media" class="nav-btn" onclick="showSection('media')">Media</div>
+    <a href="#" class="nav-btn active">Menu</a>
+    <a href="https://falahzakho.github.io/Tech_Ai-/" class="nav-btn">Media</a>
 </nav>
 
 <header>
     <h1>TECH REST</h1>
-    <p id="header-subtitle">تامی تایبەت ل زاخۆ</p>
+    <!-- لێرە گۆڕانکارییەکە کراوە -->
+    <a href="tel:07833131515" class="phone-link">
+        <i class="fas fa-phone"></i> 07833131515
+    </a>
 </header>
-
-<!-- Back Arrow Icon (Visible only in Media) -->
-<div class="back-container" id="backContainer">
-    <div class="back-btn" onclick="showSection('menu')">
-        <i class="fas fa-arrow-right"></i>
-    </div>
-</div>
 
 <div class="categories-container" id="catBar"></div>
 
 <div id="menuContent"></div>
 
-<!-- Media Container -->
-<div id="media-frame-container">
-    <iframe src="https://falahzakho.github.io/Tech_Ai-/"></iframe>
-</div>
-
-<div class="location-tag" id="footer-location">
+<div class="location-tag">
     <i class="fas fa-map-marker-alt"></i> زاخۆ - دەستپێکا رێکا پیشەسازی
 </div>
 
 <script>
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTSRjwZs-DPmh8Cg7LwOa1HTa8m58e4LriIPHbkoxdNp-vcgkNHHsVnp89Dj_TE7xiDLMugKBJRtsBr/pub?output=csv';
     let dataList = [];
-
-    function showSection(type) {
-        const menuBtn = document.getElementById('btn-menu');
-        const mediaBtn = document.getElementById('btn-media');
-        const catBar = document.getElementById('catBar');
-        const menuContent = document.getElementById('menuContent');
-        const mediaContainer = document.getElementById('media-frame-container');
-        const backBtn = document.getElementById('backContainer');
-        const subtitle = document.getElementById('header-subtitle');
-        const footer = document.getElementById('footer-location');
-
-        if (type === 'media') {
-            menuBtn.classList.remove('active');
-            mediaBtn.classList.add('active');
-            catBar.style.display = 'none';
-            menuContent.style.display = 'none';
-            mediaContainer.style.display = 'block';
-            backBtn.style.display = 'flex';
-            subtitle.innerText = 'Tech Media';
-            footer.style.display = 'none';
-        } else {
-            mediaBtn.classList.remove('active');
-            menuBtn.classList.add('active');
-            catBar.style.display = 'block';
-            menuContent.style.display = 'block';
-            mediaContainer.style.display = 'none';
-            backBtn.style.display = 'none';
-            subtitle.innerText = 'تامی تایبەت ل زاخۆ';
-            footer.style.display = 'block';
-        }
-    }
 
     async function loadData() {
         try {
@@ -240,6 +234,7 @@
         const catBar = document.getElementById('catBar');
         const menuContent = document.getElementById('menuContent');
         const cats = [...new Set(dataList.map(i => i.cat))];
+
         catBar.innerHTML = '';
         menuContent.innerHTML = '';
 
@@ -253,11 +248,23 @@
             const section = document.createElement('div');
             section.id = `section-${cat}`;
             section.className = `menu-section ${index === 0 ? 'active' : ''}`;
+            
             const gridDiv = document.createElement('div');
             gridDiv.className = 'food-grid';
-            dataList.filter(f => f.cat === cat).forEach(food => {
-                gridDiv.innerHTML += `<div class="food-card"><div class="food-img" style="background-image: url('${food.img}')"></div><div class="food-info"><h3>${food.name}</h3><div><span class="price-tag">${food.price}</span></div></div></div>`;
+            
+            const foods = dataList.filter(f => f.cat === cat);
+            foods.forEach(food => {
+                gridDiv.innerHTML += `
+                    <div class="food-card">
+                        <div class="food-img" style="background-image: url('${food.img}')"></div>
+                        <div class="food-info">
+                            <h3>${food.name}</h3>
+                            <div><span class="price-tag">${food.price}</span></div>
+                        </div>
+                    </div>
+                `;
             });
+
             section.appendChild(gridDiv);
             menuContent.appendChild(section);
         });
