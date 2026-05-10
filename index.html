@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Rest | Modern Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700;900&display=swap');
+
+        :root {
+            --primary: #38bdf8;
+            --accent: #fbbf24;
+            --card-bg: rgba(255, 255, 255, 0.03); 
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; transition: all 0.3s ease; }
+
+        body {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            margin: 0;
+            padding-bottom: 50px;
+            min-height: 100vh;
+            color: #fff;
+            background: linear-gradient(rgba(2, 6, 23, 0.7), rgba(2, 6, 23, 0.7)), 
+                        url('https://i.postimg.cc/qRzMnWFV/photo-2026-05-09-18-07-24.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        .top-nav {
+            display: flex;
+            gap: 10px;
+            padding: 15px 20px;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        [dir="ltr"] .top-nav { justify-content: flex-start; }
+        [dir="rtl"] .top-nav { justify-content: flex-end; }
+
+        .nav-btn {
+            position: relative;
+            cursor: pointer;
+            background: rgba(56, 189, 248, 0.2);
+            padding: 10px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        header {
+            padding: 70px 20px 30px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(2,6,23,0.8), transparent);
+        }
+
+        header h1 { font-size: 2.2rem; color: var(--primary); text-transform: uppercase; margin: 0; }
+
+        .food-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; }
+
+        .food-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .add-btn {
+            position: absolute;
+            top: 10px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        [dir="ltr"] .add-btn { right: 10px; }
+        [dir="rtl"] .add-btn { left: 10px; }
+
+        .food-img { width: 100%; height: 130px; background-size: cover; background-position: center; }
+        .food-info { padding: 12px; text-align: center; flex-grow: 1; }
+        .food-info h3 { font-size: 0.95rem; margin-bottom: 8px; min-height: 40px; }
+        .price-tag { background: var(--accent); color: #000; padding: 4px 10px; border-radius: 12px; font-weight: 900; }
+
+        #cart-panel {
+            position: fixed;
+            top: 0;
+            width: 85%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            transition: 0.4s ease;
+            padding: 20px;
+        }
+
+        [dir="ltr"] #cart-panel { left: -100%; }
+        [dir="rtl"] #cart-panel { right: -100%; }
+        [dir="ltr"] #cart-panel.open { left: 0; }
+        [dir="rtl"] #cart-panel.open { right: 0; }
+
+        .cart-header { display: flex; justify-content: space-between; align-items:
